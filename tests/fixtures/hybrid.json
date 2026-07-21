@@ -1,0 +1,11 @@
+{
+  "evidence": {
+    "pci": [
+      {"bus_id":"0000:01:00.0","class_id":"0302","vendor_id":"10de","device_id":"28a0"},
+      {"bus_id":"0000:00:02.0","class_id":"0300","vendor_id":"8086","device_id":"46a6"}
+    ],
+    "dmi": {"chassis_type":"10"},
+    "cpu": {"vendor":"GenuineIntel","family":"6","model":"154"}
+  },
+  "expected_profile_ids": ["cpu.intel","graphics.hybrid","graphics.intel","graphics.nvidia"]
+}

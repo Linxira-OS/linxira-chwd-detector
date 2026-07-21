@@ -1,0 +1,8 @@
+{
+  "evidence": {
+    "pci": [{"bus_id":"0000:00:02.0","class_id":"0x030000","vendor_id":"0x8086","device_id":"0x46a6"}],
+    "dmi": {"system_vendor":"Framework","product_name":"Laptop","chassis_type":"10"},
+    "cpu": {"vendor":"GenuineIntel","family":"6","model":"154"}
+  },
+  "expected_profile_ids": ["cpu.intel","graphics.intel"]
+}

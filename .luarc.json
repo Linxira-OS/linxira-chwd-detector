@@ -1,5 +1,0 @@
-{
-  "Lua.runtime.special": {
-    "die": "os.exit"
-  }
-}

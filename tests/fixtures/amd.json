@@ -1,0 +1,8 @@
+{
+  "evidence": {
+    "pci": [{"bus_id":"0000:08:00.0","class_id":"0300","vendor_id":"1002","device_id":"1638"}],
+    "dmi": {},
+    "cpu": {"vendor":"AuthenticAMD","family":"25","model":"80"}
+  },
+  "expected_profile_ids": ["cpu.amd","graphics.amd"]
+}

@@ -1,0 +1,8 @@
+{
+  "evidence": {
+    "pci": [{"bus_id":"0000:01:00.0","class_id":"0302","vendor_id":"10DE","device_id":"28A0"}],
+    "dmi": {},
+    "cpu": {}
+  },
+  "expected_profile_ids": ["graphics.nvidia"]
+}

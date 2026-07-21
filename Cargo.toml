@@ -1,31 +1,18 @@
 [package]
-name = "chwd"
-version = "1.23.0"
-authors = ["Vladislav Nepogodin <nepogodin.vlad@gmail.com>"]
+name = "linxira-chwd-detector"
+version = "0.1.0"
+authors = [
+    "Vladislav Nepogodin <nepogodin.vlad@gmail.com>",
+    "Linxira contributors",
+]
 license = "GPL-3.0-only"
 edition = "2024"
+rust-version = "1.85"
+description = "Read-only PCI, DMI, CPU, and VM profile detector derived from CHWD"
 
 [dependencies]
-toml = "1.1"
-libpci = { path = "libpci", version = "0.2.0" }
-libusb = { path = "libusb", version = "0.2.0", features = ["std", "usb-ids"] }
-subprocess = "1.2"
-colored = "3"
-log = "0.4"
-clap = { features = ["derive"], version = "4" }
-anyhow = "1"
-nix = { features = ["user"], default-features = false, version = "0.31" }
-comfy-table = { default-features = false, version = "7" }
-regex = "1.12"
-once_cell = { features = ["std"], default-features = false, version = "1" }
-i18n-embed = { version = "0.16", features = ["fluent-system", "desktop-requester"] }
-i18n-embed-fl = "0.10"
-rust-embed = { version = "8", features = ["debug-embed", "include-exclude"] }
-glob = "0.3"
-
-[build-dependencies]
-clap = { features = ["derive"], version = "4" }
-clap_complete = "4"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
 
 [profile.release]
 strip = "symbols"
@@ -33,7 +20,3 @@ panic = "abort"
 lto = true
 opt-level = 3
 codegen-units = 1
-
-[lib]
-name = "chwd"
-path = "src/lib.rs"

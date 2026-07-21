@@ -1,0 +1,8 @@
+{
+  "evidence": {
+    "pci": [{"bus_id":"0000:00:02.0","class_id":"0300","vendor_id":"not-hex","device_id":"46a6"}],
+    "dmi": {},
+    "cpu": {}
+  },
+  "expected_profile_ids": []
+}

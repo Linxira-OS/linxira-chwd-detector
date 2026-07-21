@@ -1,67 +1,46 @@
-<div align="center">
-  <h1>chwd</h1>
-  <p>
-    <strong>CachyOS Hardware Detection Tool written in Rust</strong>
-  </p>
-  <p>
+# Linxira CHWD Detector
 
-[![Dependency Status](https://deps.rs/repo/github/cachyos/chwd/status.svg)](https://deps.rs/repo/github/cachyos/chwd)
-<br />
-[![CI](https://github.com/cachyos/chwd/actions/workflows/rust.yml/badge.svg)](https://github.com/cachyos/chwd/actions/workflows/rust.yml)
+`linxira-chwd-detector` is a small, read-only hardware detector derived from CHWD 1.23.0.
+It emits stable profile IDs and versioned JSON for a separate Linxira manager. It does not
+install packages, invoke commands, alter profiles, write system state, or accept paths or other
+arguments.
 
-  </p>
-</div>
+## Output contract
 
-`chwd` (CachyOS Hardware Detection) is a powerful, Rust-based command-line utility designed to take the headache out of hardware configuration on Linux. It automatically detects your system's hardware components (like GPUs, Network Interface Cards) and applies the optimal, verified driver profiles so your hardware "just works."
+The binary reads only these fixed Linux evidence locations:
 
-Built primarily for CachyOS `chwd` replaces manual installation drivers through `pacman` and manual configuration.
+- `/sys/bus/pci/devices/*/{class,vendor,device}`
+- `/sys/devices/virtual/dmi/id/{sys_vendor,product_name,chassis_type}`
+- `/proc/cpuinfo`
 
-## Key Features
+It writes one JSON document to standard output. `schema_version` versions the contract;
+`detector.version` versions this implementation. Arrays are sorted for deterministic output.
+Missing evidence is represented by `null` or an empty array and a structured warning. The binary
+accepts no command-line arguments, package names, commands, or filesystem paths.
 
-- **Automatic Configuration**: Detects connected hardware and automatically installs correct driver profiles.
-- **Targeted Installation**: Allows installing or removing specific hardware profiles easily (e.g., reinstalling drivers when swapping GPUs).
-- **Comprehensive Listings**: Checks what profiles are currently installed, which profiles your current hardware supports, or all known profiles in the database.
-- **Safety Checks**: Checks using `libpci` and verifies hardware presence before applying configurations to prevent system breakage.
+Stable profile IDs currently emitted are:
 
-## Quick Start
+- `cpu.amd`, `cpu.intel`
+- `graphics.amd`, `graphics.intel`, `graphics.nvidia`, `graphics.hybrid`
+- `vm.hyperv`, `vm.qemu`, `vm.virtualbox`, `vm.vmware`, `vm.xen`
 
-### Installation
+These IDs describe detected hardware classes. They deliberately contain no package or mutation
+policy; a separate manager owns any mapping from IDs to actions.
 
-`chwd` comes **pre-installed on CachyOS**, so no action is required out of the box. If you are using **Arch Linux**, you can install `chwd` directly from the [CachyOS repositories](https://github.com/CachyOS/linux-cachyos?tab=readme-ov-file#cachyos-repositories):
+## Build and test
 
-```bash
-sudo pacman -S chwd
+The crate targets Linux but its fixture tests are platform-independent:
+
+```sh
+cargo fmt --check
+cargo test --all-targets
+cargo clippy --all-targets -- -D warnings
+cargo build --release
+./target/release/linxira-chwd-detector
 ```
 
-### Basic Usage
+## License and provenance
 
-For detailed usage instructions, please refer to the [chwd documentation on the CachyOS Wiki](https://wiki.cachyos.org/features/chwd/chwd/).
-
-## Under the Hood (For Contributors)
-
-`chwd` uses `.toml` files (can be found under `profiles/`) to manage hardware profiles. 
-
-When you run an `--install` or `-a` command, `chwd` checks the PCI devices on your machine against the available TOML profiles.
-
-## Building from Source
-
-If you want to contribute, test the latest untested changes, or just build it yourself:
-
-1.  **Install build dependencies:**
-    ```bash
-    sudo pacman -S --needed rust pciutils
-    ```
-2.  **Clone the repository:**
-    ```bash
-    git clone https://github.com/cachyos/chwd.git
-    cd chwd
-    ```
-3.  **Build the project:**
-    ```bash
-    cargo build --release
-    ```
-    The compiled binary will be located in `./target/release/chwd`.
-
-## License
-
-This project is licensed under the **GNU General Public License v3.0**. See the [LICENSE](LICENSE) file for full details.
+This fork is GPL-3.0-only. The complete license is in [LICENSE](LICENSE), and upstream attribution
+and the exact fork point are documented in [UPSTREAM.md](UPSTREAM.md). Git history was retained
+from the local CHWD repository.
