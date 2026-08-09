@@ -164,3 +164,9 @@ pub fn unique_graphics_vendors(evidence: &Evidence) -> BTreeSet<&str> {
         .map(|device| device.vendor_id.as_str())
         .collect()
 }
+
+pub mod consts;
+pub mod data;
+pub mod device;
+pub mod hwd_misc;
+pub mod profile;
