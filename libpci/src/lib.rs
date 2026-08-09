@@ -212,11 +212,12 @@ impl PCIDevice<'_> {
             let size = (class.len() * mem::size_of::<u8>()) as usize;
 
             unsafe {
-                libpci_c_sys::pci_lookup_class_helper(
+                libpci_c_sys::pci_lookup_name(
                     (*self.0).access,
                     class.as_mut_ptr().cast(),
-                    size,
-                    self.0,
+                    size as ::core::ffi::c_int,
+                    libpci_c_sys::pci_lookup_mode_PCI_LOOKUP_CLASS as ::core::ffi::c_int,
+                    (*self.0).device_class as ::core::ffi::c_int,
                 );
             }
             Some(String::from(unsafe { c_char_to_str(class.as_ptr().cast()) }))
@@ -233,11 +234,13 @@ impl PCIDevice<'_> {
             let size = (vendor.len() * mem::size_of::<u8>()) as usize;
 
             unsafe {
-                libpci_c_sys::pci_lookup_vendor_helper(
+                libpci_c_sys::pci_lookup_name(
                     (*self.0).access,
                     vendor.as_mut_ptr().cast(),
-                    size,
-                    self.0,
+                    size as ::core::ffi::c_int,
+                    libpci_c_sys::pci_lookup_mode_PCI_LOOKUP_VENDOR as ::core::ffi::c_int,
+                    (*self.0).vendor_id as ::core::ffi::c_int,
+                    (*self.0).device_id as ::core::ffi::c_int,
                 );
             }
             Some(String::from(unsafe { c_char_to_str(vendor.as_ptr().cast()) }))
@@ -254,11 +257,13 @@ impl PCIDevice<'_> {
             let size = (device.len() * mem::size_of::<u8>()) as usize;
 
             unsafe {
-                libpci_c_sys::pci_lookup_device_helper(
+                libpci_c_sys::pci_lookup_name(
                     (*self.0).access,
                     device.as_mut_ptr().cast(),
-                    size,
-                    self.0,
+                    size as ::core::ffi::c_int,
+                    libpci_c_sys::pci_lookup_mode_PCI_LOOKUP_DEVICE as ::core::ffi::c_int,
+                    (*self.0).vendor_id as ::core::ffi::c_int,
+                    (*self.0).device_id as ::core::ffi::c_int,
                 );
             }
             Some(String::from(unsafe { c_char_to_str(device.as_ptr().cast()) }))

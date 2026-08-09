@@ -55,4 +55,9 @@ fn compile_helper_lib() {
         .flag_if_supported("-fmerge-all-constants")
         // Compile!
         .compile("libpci_utils.a");
+    // Explicit link directives: the helper archive must reach the linker even
+    // when the cc crate's implicit rustc-link-lib registration is dropped.
+    let out_dir = env::var("OUT_DIR").unwrap();
+    println!("cargo:rustc-link-search=native={out_dir}");
+    println!("cargo:rustc-link-lib=static=pci_utils");
 }
