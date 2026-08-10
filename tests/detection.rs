@@ -1,4 +1,4 @@
-use linxira_chwd_detector::{DetectionReport, Evidence, SCHEMA_VERSION, detect};
+use chwd::{DetectionReport, Evidence, SCHEMA_VERSION, detect};
 use serde::Deserialize;
 
 #[derive(Deserialize)]
