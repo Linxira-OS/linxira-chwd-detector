@@ -354,14 +354,14 @@ fn perform_transaction(
     match status {
         misc::Status::ErrorNotInstalled => {
             console_writer::print_error_msg!("profile-not-installed", profile_name = profile_name);
-        },
+        }
         misc::Status::ErrorAlreadyInstalled => log::warn!(
             "a version of profile '{profile_name}' is already installed!\nUse -f/--force to force \
              installation...",
         ),
         misc::Status::ErrorNoMatchLocalConfig => {
             console_writer::print_error_msg!("pass-profile-no-match-install");
-        },
+        }
         misc::Status::ErrorScriptFailed => console_writer::print_error_msg!("script-failed"),
         misc::Status::ErrorSetDatabase => console_writer::print_error_msg!("failed-set-db"),
         _ => (),

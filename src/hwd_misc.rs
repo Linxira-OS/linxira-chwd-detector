@@ -39,7 +39,7 @@ fn parse_cpu_info(content: &str) -> Option<CpuInfo> {
                 "vendor_id" if vendor.is_none() => vendor = Some(value.to_owned()),
                 "cpu family" if family.is_none() => family = Some(value.to_owned()),
                 "model" if model.is_none() => model = Some(value.to_owned()),
-                _ => {},
+                _ => {}
             }
         }
         if vendor.is_some() && family.is_some() && model.is_some() {
@@ -52,7 +52,8 @@ fn parse_cpu_info(content: &str) -> Option<CpuInfo> {
 
 #[must_use]
 pub fn get_sysfs_busid_from_amdgpu_path(amdgpu_path: &str) -> &str {
-    amdgpu_path.split('/')
+    amdgpu_path
+        .split('/')
         // Extract the 7th element (amdgpu id)
         .nth(6)
         .unwrap_or_default()

@@ -152,7 +152,7 @@ fn fill_profiles(
         Err(e) => {
             log::warn!("failed to read profile directory '{conf_path}': {e}");
             return;
-        },
+        }
     };
     for entry in dir_entries {
         let config_file_path = format!(
@@ -348,7 +348,7 @@ pub fn get_all_devices_of_profile(devices: &ListOfDevicesT, profile: &Profile) -
 
     if profile.cpu_family.is_some() {
         match crate::hwd_misc::get_cpu_info() {
-            Some(cpu_info) if matches_cpu_filter(profile, &cpu_info) => {},
+            Some(cpu_info) if matches_cpu_filter(profile, &cpu_info) => {}
             _ => return vec![],
         }
     }
