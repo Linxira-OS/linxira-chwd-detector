@@ -1,11 +1,15 @@
 # Linxira CHWD Detector
 
-`linxira-chwd-detector` is a small, read-only hardware detector derived from CHWD 1.23.0.
-It emits stable profile IDs and versioned JSON for a separate Linxira manager. It does not
-install packages, invoke commands, alter profiles, write system state, or accept paths or other
-arguments.
+Full CHWD 1.23.0 port: hardware detection and driver configuration tool for Linxira OS.
 
-## Output contract
+Two binaries are shipped (same code, different entry contracts):
+
+| Binary | Contract |
+|---|---|
+| `chwd` | Full CHWD CLI: `list` / `autoconfigure` / `install` / `remove` (CachyOS-compatible) |
+| `linxira-chwd-detector` | No-argument mode: emits a read-only JSON hardware report for `linxira-hardware-driver-manager` |
+
+## Output contract (`linxira-chwd-detector`, no arguments)
 
 The binary reads only these fixed Linux evidence locations:
 
@@ -15,8 +19,7 @@ The binary reads only these fixed Linux evidence locations:
 
 It writes one JSON document to standard output. `schema_version` versions the contract;
 `detector.version` versions this implementation. Arrays are sorted for deterministic output.
-Missing evidence is represented by `null` or an empty array and a structured warning. The binary
-accepts no command-line arguments, package names, commands, or filesystem paths.
+Missing evidence is represented by `null` or an empty array and a structured warning.
 
 Stable profile IDs currently emitted are:
 
@@ -27,15 +30,27 @@ Stable profile IDs currently emitted are:
 These IDs describe detected hardware classes. They deliberately contain no package or mutation
 policy; a separate manager owns any mapping from IDs to actions.
 
+## CHWD CLI (`chwd`)
+
+Any argument routes to the full CHWD CLI (CachyOS-compatible):
+
+- `chwd --list` — list available profiles for detected devices
+- `chwd --list-installed` / `chwd --list-all` — list installed / all profiles
+- `chwd -a` / `chwd --autoconfigure` — detect hardware and install the best-matching profile
+- `chwd -i <profile>` / `chwd --install <profile>` — install a driver profile
+- `chwd -r <profile>` / `chwd --remove <profile>` — remove a driver profile
+
 ## Build and test
 
-The crate targets Linux but its fixture tests are platform-independent:
+The crate targets Linux (requires `libpci-dev` and `libusb-dev` headers) but its fixture tests
+are platform-independent:
 
 ```sh
 cargo fmt --check
 cargo test --all-targets
 cargo clippy --all-targets -- -D warnings
 cargo build --release
+./target/release/chwd -l
 ./target/release/linxira-chwd-detector
 ```
 

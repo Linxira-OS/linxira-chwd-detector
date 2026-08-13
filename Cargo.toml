@@ -44,3 +44,16 @@ codegen-units = 1
 [lib]
 name = "chwd"
 path = "src/lib.rs"
+
+# 2026-08-13 交接文档 Bug #2: 用户执行 `chwd -a` 报找不到命令。
+# 根因: 无 [[bin]] 段时默认二进制名 = package name (linxira-chwd-detector),
+# 完整 CHWD CLI 无法以 chwd 命令调用。提供双二进制:
+#   chwd                    -> 完整 CHWD CLI (list/autoconfigure/install/remove)
+#   linxira-chwd-detector   -> 无参只读 JSON 检测报告 (linxira-hardware-driver-manager 契约)
+[[bin]]
+name = "chwd"
+path = "src/main.rs"
+
+[[bin]]
+name = "linxira-chwd-detector"
+path = "src/main.rs"
