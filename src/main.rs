@@ -24,8 +24,8 @@ pub mod logger;
 pub mod misc;
 pub mod profile_misc;
 
-use chwd::profile::Profile;
-use chwd::{consts, data, device, profile};
+use lhwd::profile::Profile;
+use lhwd::{consts, data, device, profile};
 use misc::Transaction;
 
 use std::path::Path;
@@ -43,7 +43,7 @@ fn main() -> anyhow::Result<()> {
     // Any argument (including --list, --autoconfigure, --install, --remove)
     // routes to the full CHWD CLI below.
     if std::env::args_os().count() == 1 {
-        let report = chwd::collect_and_detect();
+        let report = lhwd::collect_and_detect();
         println!("{}", serde_json::to_string_pretty(&report)?);
         return Ok(());
     }

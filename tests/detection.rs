@@ -1,4 +1,4 @@
-use chwd::{DetectionReport, Evidence, SCHEMA_VERSION, detect};
+use lhwd::{DetectionReport, Evidence, SCHEMA_VERSION, detect};
 use serde::Deserialize;
 
 #[derive(Deserialize)]

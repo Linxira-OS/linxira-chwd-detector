@@ -101,7 +101,7 @@ pub fn detect(mut evidence: Evidence, mut warnings: Vec<Warning>) -> DetectionRe
     DetectionReport {
         schema_version: SCHEMA_VERSION,
         detector: DetectorMetadata {
-            name: "linxira-chwd-detector",
+            name: "linxira-hwd-detector",
             version: env!("CARGO_PKG_VERSION"),
             upstream_chwd: UPSTREAM_CHWD_VERSION,
         },

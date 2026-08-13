@@ -1,4 +1,4 @@
-# Linxira CHWD Detector
+# Linxira HWD Detector
 
 Full CHWD 1.23.0 port: hardware detection and driver configuration tool for Linxira OS.
 
@@ -6,10 +6,14 @@ Two binaries are shipped (same code, different entry contracts):
 
 | Binary | Contract |
 |---|---|
-| `chwd` | Full CHWD CLI: `list` / `autoconfigure` / `install` / `remove` (CachyOS-compatible) |
-| `linxira-chwd-detector` | No-argument mode: emits a read-only JSON hardware report for `linxira-hardware-driver-manager` |
+| `lhwd` | Full CHWD CLI: `list` / `autoconfigure` / `install` / `remove` |
+| `linxira-hwd-detector` | No-argument mode: emits a read-only JSON hardware report for `linxira-hardware-driver-manager` |
 
-## Output contract (`linxira-chwd-detector`, no arguments)
+> Naming: upstream CHWD's "C" stands for CachyOS. Linxira does not use that name;
+> the command is `lhwd` (Linxira Hardware Detection) and the package is
+> `linxira-hwd-detector`.
+
+## Output contract (`linxira-hwd-detector`, no arguments)
 
 The binary reads only these fixed Linux evidence locations:
 
@@ -30,15 +34,15 @@ Stable profile IDs currently emitted are:
 These IDs describe detected hardware classes. They deliberately contain no package or mutation
 policy; a separate manager owns any mapping from IDs to actions.
 
-## CHWD CLI (`chwd`)
+## CLI (`lhwd`)
 
 Any argument routes to the full CHWD CLI (CachyOS-compatible):
 
-- `chwd --list` — list available profiles for detected devices
-- `chwd --list-installed` / `chwd --list-all` — list installed / all profiles
-- `chwd -a` / `chwd --autoconfigure` — detect hardware and install the best-matching profile
-- `chwd -i <profile>` / `chwd --install <profile>` — install a driver profile
-- `chwd -r <profile>` / `chwd --remove <profile>` — remove a driver profile
+- `lhwd --list` — list available profiles for detected devices
+- `lhwd --list-installed` / `lhwd --list-all` — list installed / all profiles
+- `lhwd -a` / `lhwd --autoconfigure` — detect hardware and install the best-matching profile
+- `lhwd -i <profile>` / `lhwd --install <profile>` — install a driver profile
+- `lhwd -r <profile>` / `lhwd --remove <profile>` — remove a driver profile
 
 ## Build and test
 
@@ -50,8 +54,8 @@ cargo fmt --check
 cargo test --all-targets
 cargo clippy --all-targets -- -D warnings
 cargo build --release
-./target/release/chwd -l
-./target/release/linxira-chwd-detector
+./target/release/lhwd -l
+./target/release/linxira-hwd-detector
 ```
 
 ## License and provenance

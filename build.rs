@@ -11,7 +11,7 @@ fn main() {
 
     let mut command = Args::command();
     for shell in [Shell::Bash, Shell::Fish, Shell::Zsh] {
-        generate_to(shell, &mut command, "linxira-chwd-detector", &out_path)
+        generate_to(shell, &mut command, "linxira-hwd-detector", &out_path)
             .expect("Couldn't generate completion!");
     }
 }

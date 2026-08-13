@@ -1,5 +1,5 @@
 [package]
-name = "linxira-chwd-detector"
+name = "linxira-hwd-detector"
 version = "1.23.0"
 authors = [
     "Vladislav Nepogodin <nepogodin.vlad@gmail.com>",
@@ -42,18 +42,20 @@ opt-level = 3
 codegen-units = 1
 
 [lib]
-name = "chwd"
+name = "lhwd"
 path = "src/lib.rs"
 
 # 2026-08-13 交接文档 Bug #2: 用户执行 `chwd -a` 报找不到命令。
 # 根因: 无 [[bin]] 段时默认二进制名 = package name (linxira-chwd-detector),
-# 完整 CHWD CLI 无法以 chwd 命令调用。提供双二进制:
-#   chwd                    -> 完整 CHWD CLI (list/autoconfigure/install/remove)
-#   linxira-chwd-detector   -> 无参只读 JSON 检测报告 (linxira-hardware-driver-manager 契约)
+# 完整 CHWD CLI 无法以 lhwd 命令调用。提供双二进制:
+#   lhwd                   -> 完整 CHWD CLI (list/autoconfigure/install/remove)
+#   linxira-hwd-detector   -> 无参只读 JSON 检测报告 (linxira-hardware-driver-manager 契约)
+# 2026-08-13 用户决策: chwd 的 "C" 指 CachyOS, Linxira 不使用该命名,
+# 命令名定为 lhwd (Linxira Hardware Detection), 包名 linxira-hwd-detector。
 [[bin]]
-name = "chwd"
+name = "lhwd"
 path = "src/main.rs"
 
 [[bin]]
-name = "linxira-chwd-detector"
+name = "linxira-hwd-detector"
 path = "src/main.rs"
