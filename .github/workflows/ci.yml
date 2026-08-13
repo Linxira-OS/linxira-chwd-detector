@@ -23,11 +23,15 @@ jobs:
       - run: cargo clippy --all-targets --locked -- -D warnings
       - run: cargo build --release --locked
       - run: |
-          ./target/release/linxira-chwd-detector > report.json
+          ./target/release/linxira-hwd-detector > report.json
           python -c 'import json; d=json.load(open("report.json")); assert d["schema_version"] == 1'
       - run: |
-          if ./target/release/linxira-chwd-detector /tmp; then
+          if ./target/release/linxira-hwd-detector /tmp; then
             exit 1
           else
             test $? -eq 2
           fi
+      - name: Verify lhwd CLI binary exists and routes to the full CLI
+        run: |
+          test -x ./target/release/lhwd
+          ./target/release/lhwd --help | grep -q autoconfigure
